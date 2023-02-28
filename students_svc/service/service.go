@@ -5,10 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
-	db "students/db/sqlc"
 	"time"
 
-	"students/client"
+	db "lms/students_svc/db/sqlc"
+
+	"lms/students_svc/client"
 
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/log"

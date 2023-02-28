@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	"students/client"
 	"time"
+
+	"lms/students_svc/client"
 
 	"github.com/go-kit/log"
 )

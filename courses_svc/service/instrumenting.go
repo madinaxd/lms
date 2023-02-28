@@ -2,8 +2,9 @@ package service
 
 import (
 	"context"
-	"courses/client"
 	"time"
+
+	"lms/courses_svc/client"
 
 	"github.com/go-kit/kit/metrics"
 )

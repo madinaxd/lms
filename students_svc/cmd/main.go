@@ -10,10 +10,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"students/client"
-	db "students/db/sqlc"
-	"students/service"
-	"students/utils"
+	"lms/students_svc/client"
+	db "lms/students_svc/db/sqlc"
+	"lms/students_svc/service"
+	"lms/students_svc/utils"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"

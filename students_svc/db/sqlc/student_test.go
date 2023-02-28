@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"students/utils"
+	"lms/students_svc/utils"
 	"testing"
 
 	"github.com/stretchr/testify/require"

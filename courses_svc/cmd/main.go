@@ -10,10 +10,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"courses/client"
-	db "courses/db/sqlc"
-	"courses/service"
-	"courses/utils"
+	"lms/courses_svc/client"
+	db "lms/courses_svc/db/sqlc"
+	"lms/courses_svc/service"
+	"lms/courses_svc/utils"
 
 	"github.com/oklog/oklog/pkg/group"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
@@ -22,6 +22,9 @@ import (
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/kit/metrics/prometheus"
 	"github.com/go-kit/log"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
 )
 
@@ -69,6 +72,8 @@ func main() {
 	if err != nil {
 		logger.Log("db conn error", err)
 	}
+
+	runDBMigration(config.MigrationURL, config.DBSource, logger)
 
 	store := db.New(conn)
 
@@ -128,4 +133,17 @@ func main() {
 		})
 	}
 	logger.Log("exit", g.Run())
+}
+
+func runDBMigration(migrationURL string, dbSource string, logger log.Logger) {
+	migration, err := migrate.New(migrationURL, dbSource)
+	if err != nil {
+		logger.Log("cannot create new migrate instance", err)
+	}
+
+	if err = migration.Up(); err != nil && err != migrate.ErrNoChange {
+		logger.Log("failed to run migrate up", err)
+	}
+
+	logger.Log("db migrated successfully")
 }

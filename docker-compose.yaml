@@ -1,0 +1,42 @@
+version: "1.0"
+services:
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=students
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  students:
+    build:
+      context: .
+      dockerfile: students_svc/Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      - DB_SOURCE=postgresql://root:secret@postgres:5432/students?sslmode=disable
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
+    depends_on:
+      postgres:
+        condition: service_healthy
+    links:
+      - postgres
+    command: [ "/app/main" ]
+  courses:
+    build:
+      context: .
+      dockerfile: courses_svc/Dockerfile
+    ports:
+      - "7071:7071"
+    environment:
+      - DB_SOURCE=postgresql://root:secret@postgres:5432/courses?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    links:
+      - postgres
+    command: [ "/app/main" ]

@@ -2,11 +2,12 @@ package service
 
 import (
 	"context"
-	"courses/client"
-	db "courses/db/sqlc"
 	"errors"
 	"fmt"
 	"strconv"
+
+	"lms/courses_svc/client"
+	db "lms/courses_svc/db/sqlc"
 
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/log"
