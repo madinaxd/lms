@@ -43,7 +43,7 @@ func MakeHTTPHandler(e Endpoints, logger log.Logger) http.Handler {
 		encodeResponse,
 		options...,
 	))
-	r.Methods("POST").Path("/courses/").Handler(httptransport.NewServer(
+	r.Methods("POST").Path("/courses").Handler(httptransport.NewServer(
 		e.CreateCourseEndpoint,
 		decodeCreateCourseRequest,
 		encodeResponse,
