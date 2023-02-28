@@ -10,10 +10,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"lms/courses_svc/client"
-	db "lms/courses_svc/db/sqlc"
-	"lms/courses_svc/service"
-	"lms/courses_svc/utils"
+	"courses/client"
+	db "courses/db/sqlc"
+	"courses/service"
+	"courses/utils"
 
 	"github.com/oklog/oklog/pkg/group"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"

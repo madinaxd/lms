@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"lms/courses_svc/client"
-	db "lms/courses_svc/db/sqlc"
+	"courses/client"
+	db "courses/db/sqlc"
 
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/log"

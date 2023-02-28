@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"lms/courses_svc/client"
+	"courses/client"
 
 	"github.com/go-kit/kit/circuitbreaker"
 	"github.com/go-kit/kit/endpoint"

@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	db "lms/students_svc/db/sqlc"
+	db "students/db/sqlc"
 
-	"lms/students_svc/client"
+	"students/client"
 
 	"github.com/go-kit/kit/metrics"
 	"github.com/go-kit/log"

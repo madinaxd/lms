@@ -19,13 +19,26 @@ services:
       - "8081:8081"
     environment:
       - DB_SOURCE=postgresql://root:secret@postgres:5432/students?sslmode=disable
-    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
+    # command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
     depends_on:
       postgres:
         condition: service_healthy
     links:
       - postgres
     command: [ "/app/main" ]
+  postgres_courses:
+    image: postgres:14-alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=courses
+    ports:
+        - 5434:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres_courses"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   courses:
     build:
       context: .
@@ -33,10 +46,10 @@ services:
     ports:
       - "7071:7071"
     environment:
-      - DB_SOURCE=postgresql://root:secret@postgres:5432/courses?sslmode=disable
+      - DB_SOURCE=postgresql://root:secret@postgres_courses:5432/courses?sslmode=disable
     depends_on:
-      postgres:
+      postgres_courses:
         condition: service_healthy
     links:
-      - postgres
+      - postgres_courses
     command: [ "/app/main" ]

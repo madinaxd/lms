@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"lms/students_svc/client"
+	"students/client"
 
 	"github.com/go-kit/log"
 )
