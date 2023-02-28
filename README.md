@@ -33,9 +33,17 @@ docker-compose -up -d
 ```
 
 ## Test
-Now you can test the API with Postman post method at:
+
+Now you can test the API with Postman at:
 
 ```console
 localhost:8081/students
 localhost:7071/courses
+```
+
+
+## Further development
+
+To create API Gateway. 
+
 ```
