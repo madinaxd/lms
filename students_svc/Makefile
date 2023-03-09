@@ -16,7 +16,7 @@ migratedown:
 	migrate -path db/migrations -database "postgresql://postgres:postgres@localhost:5432/students_svc?sslmode=disable" --verbose down
 
 sqlc:
-	docker run --rm -v "D:/go_projects/students_svc/db:/src" -w /src kjconroy/sqlc generate
+	docker run --rm -v "D:/go_projects/lms/students_svc/db:/src" -w /src kjconroy/sqlc generate
 
 test:
 	go test -v -cover ./...

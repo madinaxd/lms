@@ -30,9 +30,10 @@ WHERE id = $1
 RETURNING *;
 
 -- name: GetStudentsByCourseID :many
-SELECT students.id, fullname, date_of_birth, grade, phone, students.created_at FROM enrollments
-INNER JOIN students
-ON enrollments.student_id = students.id
-WHERE course_id = $1
+SELECT S.id, S.fullname, S.date_of_birth, S.grade, S.phone, S.created_at 
+FROM enrollments as E
+JOIN students as S
+ON E.student_id = S.id
+WHERE E.course_id = $1
 LIMIT $2
 OFFSET $3;

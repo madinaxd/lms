@@ -2,10 +2,14 @@ version: "1.0"
 services:
   postgres:
     image: postgres:14-alpine
+    volumes:
+      - postgres_data_students:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=secret
       - POSTGRES_DB=students
+    ports:
+        - 5433:5432
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -19,7 +23,6 @@ services:
       - "8081:8081"
     environment:
       - DB_SOURCE=postgresql://root:secret@postgres:5432/students?sslmode=disable
-    # command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
     depends_on:
       postgres:
         condition: service_healthy
@@ -28,6 +31,8 @@ services:
     command: [ "/app/main" ]
   postgres_courses:
     image: postgres:14-alpine
+    volumes:
+      - postgres_data_courses:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=secret
@@ -53,3 +58,6 @@ services:
     links:
       - postgres_courses
     command: [ "/app/main" ]
+volumes:
+  postgres_data_courses:
+  postgres_data_students:
